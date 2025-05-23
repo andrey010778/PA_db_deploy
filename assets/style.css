@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+/* Основные стили размер базового шрифта и цвет фона документа */
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #333333;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Стили заголовка и отступы блока с заголовками */
+
+.header {
+    text-align: center;
+    background-color: #ffffff;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Главный заголовок */
+.header-title {
+    text-align: center;
+    font-size: 42px;
+    color: #c23616;
+    margin-bottom: 10px;
+    /* color: #222222 */
+}
+
+/* Подзаголовок описание */
+.header-description {
+    font-size: 25px;
+    color: #7f8c8d
+}
+
+/* Фильтры */
+
+.filters-row {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    padding: 15px;
+}
+
+.filter-label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 20px;
+    display: block;
+    
+}
+
+.filter-dropdown{
+    width: 100%;
+    font-size: 16px
+
+}
+
+/* Информационная панель */
+
+.stats-panel{
+    /* margin-top: 20px; */
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    padding: 15px;
+} 
+
+.stats-header{
+    background-color: rgba(240, 240, 240, 1.0);
+    color: #222222;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+
+/* Графики */
+
+.dash-graph{
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 10px;
+    margin-bottom: 20px;
+
+}
