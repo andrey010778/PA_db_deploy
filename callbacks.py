@@ -5,12 +5,29 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import settings as st
 import plotly.io as pio
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, exc
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Подключение к БД
 DATABASE_URL = os.getenv("DATABASE_URL")
-engine = create_engine(DATABASE_URL)
+
+if not DATABASE_URL:
+    print("❌ DATABASE_URL не загружен из .env!")
+    exit(1)
+
+print("Пытаюсь подключиться к:", DATABASE_URL)
+
+try:
+    engine = create_engine(DATABASE_URL)
+    with engine.connect() as conn:
+        print("✅ Успешное подключение!")
+except exc.SQLAlchemyError as e:
+    print(f"❌ Ошибка подключения: {e}")
+
+#engine = create_engine(DATABASE_URL)
 
 def get_data_from_db():
     query = "SELECT * FROM clear_dash_new"
