@@ -2,7 +2,7 @@ from dash import Dash
 import dash_bootstrap_components as dbc
 from layouts import get_layouts
 from callbacks import register_callbacks
-import psycopg2
+# import psycopg2
 
 
 app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
