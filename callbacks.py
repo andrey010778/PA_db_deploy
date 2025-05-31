@@ -39,14 +39,7 @@ pio.templates['custom'] = pio.templates['plotly'].update(
 )
 pio.templates.default='custom'
 
-def format_days(days):
-    days = round(days)
-    if days % 10 == 1 and days % 100 != 11:
-        return f"{days} день"
-    elif 2 <= days % 10 <= 4 and (days % 100 < 10 or days % 100 >= 20):
-        return f"{days} дня"
-    else:
-        return f"{days} дней"
+
 
 # def register_callbacks(app):
 #     @app.callback(
@@ -275,56 +268,30 @@ def register_callbacks(app):
             paper_bgcolor=st.PAPER_BACKGROUND
         )
 
+        
         # 4. Статистика
-        # Основная статистика
-        stats_items = [
-            dbc.ListGroupItem(f"Количество счетов: {len(filtered_df)}"),
-            dbc.ListGroupItem(f"Общая сумма: {filtered_df['Sum'].sum():,.0f} ₽"),
-            dbc.ListGroupItem(f"Медианный чек: {filtered_df['Sum'].median():,.0f} ₽"),
-        ]
+        def format_days(days):
+            days = round(days)
+            if days % 10 == 1 and days % 100 != 11:
+                return f"{days} день"
+            elif 2 <= days % 10 <= 4 and (days % 100 < 10 or days % 100 >= 20):
+                return f"{days} дня"
+            else:
+                return f"{days} дней"
 
-        # Сумма неоплаченных счетов по отделам
-        unpaid_by_dept = filtered_df[filtered_df['Payment_date'].isna()].groupby('Department')['Sum'].sum()
-        if not unpaid_by_dept.empty:
-            stats_items.append(dbc.ListGroupItem(html.H5("Неоплаченные счета по отделам:")))
-            for dept, amount in unpaid_by_dept.items():
-                stats_items.append(
-                    dbc.ListGroupItem(
-                        f"{dept}: {amount:,.0f} ₽",
-                        style={'padding-left': '20px'}  # Отступ для вложенности
-                    )
-                )
-        else:
-            stats_items.append(dbc.ListGroupItem("Нет неоплаченных счетов"))
+        def format_currency(amount):
+            return f"{amount:,.0f}".replace(",", " ") + " ₽"
 
-        # Общая сумма неоплаченных счетов
-        total_unpaid = filtered_df[filtered_df['Payment_date'].isna()]['Sum'].sum()
-        stats_items.append(
-            dbc.ListGroupItem(f"Всего неоплаченных: {total_unpaid:,.0f} ₽", color="danger")
-        )
-
-        # Остальная статистика
-        stats_items.extend([
-            dbc.ListGroupItem(f"Среднее время выполнения: {format_days(filtered_df['Exec_time'].mean())}"),
+        stats = dbc.ListGroup([
+            dbc.ListGroupItem(f'Количество счетов: {len(filtered_df)}'),
+            dbc.ListGroupItem(f'Общая сумма: {format_currency(filtered_df["Sum"].sum())}'),
+            dbc.ListGroupItem(f'Сумма неоплаченных счетов: {format_currency(filtered_df[filtered_df['Payment_date'].isna()]['Sum'].sum())}'),
+            dbc.ListGroupItem(f'Медианное значение по сумме счёта: {format_currency(filtered_df["Sum"].median())}'),
+            dbc.ListGroupItem(f'Среднее значение по сумме счёта: {format_currency(filtered_df["Sum"].mean())}'),
+            dbc.ListGroupItem(f'Среднее время оплаты: {format_days(filtered_df["Payment_time"].mean())}'),
+            dbc.ListGroupItem(f'Среднее значение по выполнению: {format_days(filtered_df["Exec_time"].mean())}'),
+            
         ])
-
-        # Добавляем статистику по оплатам только если есть оплаченные счета
-        if not filtered_df['Payment_date'].isna().all():
-            stats_items.append(
-                dbc.ListGroupItem(f"Среднее время оплаты: {format_days(filtered_df['Payment_time'].mean())}")
-            )
-
-        stats = dbc.ListGroup(stats_items, flush=True)
-        # # 4. Статистика
-        # stats = dbc.ListGroup([
-        #     dbc.ListGroupItem(f'Количество счетов: {len(filtered_df)}'),
-        #     dbc.ListGroupItem(f'Общая сумма: {filtered_df["Sum"].sum():,.0f} ₽'),
-        #     dbc.ListGroupItem(f'Медианное значение по сумме счёта: {filtered_df["Sum"].median():,.0f} ₽'),
-        #     dbc.ListGroupItem(f'Среднее значение по сумме счёта: {filtered_df["Sum"].mean():,.0f} ₽'),
-        #     dbc.ListGroupItem(f'Среднее значение по выполнению: {format_days(filtered_df["Exec_time"].mean())}'),
-        #     dbc.ListGroupItem(f'Среднее время оплаты: {format_days(filtered_df["Payment_time"].mean())}'),
-        #     dbc.ListGroupItem(f"Сумма неоплаченных счетов: {filtered_df[filtered_df['Payment_date'].isna()]['Sum'].sum():,.0f} ₽"),
-        # ])
             
 
 
