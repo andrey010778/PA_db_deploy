@@ -285,7 +285,7 @@ def register_callbacks(app):
         stats = dbc.ListGroup([
             dbc.ListGroupItem(f'Количество счетов: {len(filtered_df)}'),
             dbc.ListGroupItem(f'Общая сумма: {format_currency(filtered_df["Sum"].sum())}'),
-            dbc.ListGroupItem(f'Сумма неоплаченных счетов: {format_currency(filtered_df[filtered_df['Payment_date'].isna()]['Sum'].sum())}'),
+            dbc.ListGroupItem(f"Сумма неоплаченных счетов: {format_currency(filtered_df[filtered_df['Payment_date'].isna()]['Sum'].sum())}"),
             dbc.ListGroupItem(f'Медианное значение по сумме счёта: {format_currency(filtered_df["Sum"].median())}'),
             dbc.ListGroupItem(f'Среднее значение по сумме счёта: {format_currency(filtered_df["Sum"].mean())}'),
             dbc.ListGroupItem(f'Среднее время оплаты: {format_days(filtered_df["Payment_time"].mean())}'),
