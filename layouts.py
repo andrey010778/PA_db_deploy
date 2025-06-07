@@ -12,21 +12,22 @@ load_dotenv()
 # Подключение к БД
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# Подключение к БД
+DATABASE_URL = os.getenv("DATABASE_URL")
+
 if not DATABASE_URL:
-    print("❌ DATABASE_URL не загружен из .env!")
+    print("DATABASE_URL didn`t load from .env!")
     exit(1)
 
-print("Пытаюсь подключиться к:", DATABASE_URL)
+print("Try to connect:", DATABASE_URL)
 
 try:
     engine = create_engine(DATABASE_URL)
     with engine.connect() as conn:
-        print("✅ Успешное подключение!")
+        print("Connection SUCCESS!")
 except exc.SQLAlchemyError as e:
-    print(f"❌ Ошибка подключения: {e}")
+    print(f"Connection FAILED!: {e}")
 
-
-#engine = create_engine(DATABASE_URL)
 
 def get_data_from_db():
     # Загрузка данных из PostgreSQL
