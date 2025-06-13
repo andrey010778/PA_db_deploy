@@ -12,9 +12,6 @@ load_dotenv()
 # Подключение к БД
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Подключение к БД
-DATABASE_URL = os.getenv("DATABASE_URL")
-
 if not DATABASE_URL:
     print("DATABASE_URL didn`t load from .env!")
     exit(1)
